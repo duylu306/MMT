@@ -1,0 +1,140 @@
+services:
+  iotdb-service:
+    image: apache/iotdb:1.3.3-standalone
+    hostname: iotdb-service
+    container_name: iotdb-service
+    restart: unless-stopped
+    cpus: 4.0
+    mem_limit: 3072m
+    memswap_limit: 3072m
+    ports:
+      - "6667:6667"
+      - "9091:9091"
+      - "9092:9092"
+    entrypoint:
+      - /bin/bash
+      - -c
+      - "cp /iotdb-custom-conf/iotdb-system.properties /iotdb/conf/iotdb-system.properties && cp /iotdb-custom-conf/datanode-env.sh /iotdb/conf/datanode-env.sh && cp /iotdb-custom-conf/confignode-env.sh /iotdb/conf/confignode-env.sh && chmod +x /iotdb/conf/*.sh && exec /iotdb/sbin/entrypoint.sh all"
+    volumes:
+      - ./docker/iotdb:/iotdb-custom-conf:ro
+      - iotdb_data:/iotdb/data
+      - iotdb_logs:/iotdb/logs
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c '</dev/tcp/127.0.0.1/6667 && </dev/tcp/127.0.0.1/9091'"]
+      interval: 5s
+      timeout: 5s
+      retries: 24
+      start_period: 20s
+    networks:
+      - iotdb-net
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.49.1
+    hostname: cadvisor
+    container_name: iotdb-cadvisor
+    restart: unless-stopped
+    cpus: 0.5
+    mem_limit: 256m
+    privileged: true
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - iotdb-net
+
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    hostname: prometheus
+    container_name: iotdb-prometheus
+    restart: unless-stopped
+    cpus: 1.0
+    mem_limit: 512m
+    ports:
+      - "9090:9090"
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=7d"
+      - "--web.enable-lifecycle"
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    depends_on:
+      iotdb-service:
+        condition: service_healthy
+    networks:
+      - iotdb-net
+
+  grafana:
+    image: grafana/grafana:11.2.2
+    hostname: grafana
+    container_name: iotdb-grafana
+    restart: unless-stopped
+    cpus: 0.5
+    mem_limit: 256m
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-iotdb_local_lab}
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./docker/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./docker/grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - iotdb-net
+
+  loadgen:
+    build:
+      context: .
+      dockerfile: docker/loadgen/Dockerfile
+    image: iotdb-write-cost-loadgen:1.0.0
+    container_name: iotdb-loadgen
+    restart: "no"
+    cpus: 4.0
+    mem_limit: 1536m
+    environment:
+      - IOTDB_HOST=iotdb-service
+      - IOTDB_PORT=6667
+      - IOTDB_USER=${IOTDB_USER:-root}
+      - IOTDB_PASSWORD=${IOTDB_PASSWORD:-root}
+      - IOTDB_DN_METRICS_URL=http://iotdb-service:9091/metrics
+      - PROMETHEUS_URL=http://prometheus:9090
+      - GRAFANA_URL=http://grafana:3000
+      - CADVISOR_URL=http://cadvisor:8080
+    volumes:
+      - ./:/workspace
+      - iotdb_logs:/iotdb-logs:ro
+    depends_on:
+      iotdb-service:
+        condition: service_healthy
+      prometheus:
+        condition: service_started
+      grafana:
+        condition: service_started
+    networks:
+      - iotdb-net
+
+networks:
+  iotdb-net:
+    name: iotdb-write-cost-net
+    driver: bridge
+
+volumes:
+  iotdb_data:
+    name: iotdb_exp_data
+  iotdb_logs:
+    name: iotdb_exp_logs
+  prometheus_data:
+    name: iotdb_exp_prometheus
+  grafana_data:
+    name: iotdb_exp_grafana

@@ -1,0 +1,217 @@
+{
+  "run_id": "demo_ooo050_b1000_c4",
+  "database": "root.bench",
+  "flushed_seq_files": 13,
+  "flushed_unseq_files": 5,
+  "flushed_seq_bytes": 2655663,
+  "flushed_unseq_bytes": 919722,
+  "flushed_seq_memtable_bytes": 5815392,
+  "flushed_unseq_memtable_bytes": 1864608,
+  "log_cross_compaction_count": 2,
+  "log_inner_compaction_count": 2,
+  "log_compaction_time_s": 0.96,
+  "compaction_overlap_chunks": 180,
+  "compaction_overlap_pages": 180,
+  "compaction_non_overlap_chunks": 0,
+  "compaction_non_overlap_pages": 0,
+  "warn_count": 2,
+  "error_count": 2,
+  "flush_events": [
+    {
+      "ts": "2026-10-27 14:48:53,817",
+      "space": "seq",
+      "path": "/iotdb/data/datanode/data/sequence/root.bench/2024/2810/1793112533750-1-0-0.tsfile",
+      "memtable_bytes": 288000,
+      "file_bytes": 131990,
+      "compression_ratio": 2.18
+    },
+    {
+      "ts": "2026-10-27 14:48:53,914",
+      "space": "seq",
+      "path": "/iotdb/data/datanode/data/sequence/root.bench/2025/2810/1793112533871-1-0-0.tsfile",
+      "memtable_bytes": 480000,
+      "file_bytes": 221001,
+      "compression_ratio": 2.17
+    },
+    {
+      "ts": "2026-10-27 14:48:53,950",
+      "space": "seq",
+      "path": "/iotdb/data/datanode/data/sequence/root.bench/2024/2810/1793112533852-3-0-0.tsfile",
+      "memtable_bytes": 426336,
+      "file_bytes": 195876,
+      "compression_ratio": 2.18
+    },
+    {
+      "ts": "2026-10-27 14:48:54,077",
+      "space": "seq",
+      "path": "/iotdb/data/datanode/data/sequence/root.bench/2025/2810/1793112533927-3-0-0.tsfile",
+      "memtable_bytes": 536928,
+      "file_bytes": 246807,
+      "compression_ratio": 2.18
+    },
+    {
+      "ts": "2026-10-27 14:48:54,103",
+      "space": "seq",
+      "path": "/iotdb/data/datanode/data/sequence/root.bench/2024/2810/1793112533945-4-0-0.tsfile",
+      "memtable_bytes": 515040,
+      "file_bytes": 236651,
+      "compression_ratio": 2.18
+    },
+    {
+      "ts": "2026-10-27 14:48:54,225",
+      "space": "seq",
+      "path": "/iotdb/data/datanode/data/sequence/root.bench/2025/2810/1793112534069-4-0-0.tsfile",
+      "memtable_bytes": 502944,
+      "file_bytes": 231659,
+      "compression_ratio": 2.17
+    },
+    {
+      "ts": "2026-10-27 14:48:54,273",
+      "space": "seq",
+      "path": "/iotdb/data/datanode/data/sequence/root.bench/2024/2810/1793112534114-5-0-0.tsfile",
+      "memtable_bytes": 499296,
+      "file_bytes": 229776,
+      "compression_ratio": 2.17
+    },
+    {
+      "ts": "2026-10-27 14:48:54,280",
+      "space": "unseq",
+      "path": "/iotdb/data/datanode/data/unsequence/root.bench/2024/2810/1793112533850-2-0-0.tsfile",
+      "memtable_bytes": 424128,
+      "file_bytes": 208632,
+      "compression_ratio": 2.03
+    },
+    {
+      "ts": "2026-10-27 14:48:54,359",
+      "space": "unseq",
+      "path": "/iotdb/data/datanode/data/unsequence/root.bench/2025/2810/1793112533925-2-0-0.tsfile",
+      "memtable_bytes": 474624,
+      "file_bytes": 232653,
+      "compression_ratio": 2.04
+    },
+    {
+      "ts": "2026-10-27 14:48:54,397",
+      "space": "seq",
+      "path": "/iotdb/data/datanode/data/sequence/root.bench/2025/2810/1793112534245-5-0-0.tsfile",
+      "memtable_bytes": 488736,
+      "file_bytes": 225073,
+      "compression_ratio": 2.17
+    },
+    {
+      "ts": "2026-10-27 14:48:54,424",
+      "space": "seq",
+      "path": "/iotdb/data/datanode/data/sequence/root.bench/2024/2810/1793112534266-6-0-0.tsfile",
+      "memtable_bytes": 491136,
+      "file_bytes": 226047,
+      "compression_ratio": 2.17
+    },
+    {
+      "ts": "2026-10-27 14:48:54,537",
+      "space": "seq",
+      "path": "/iotdb/data/datanode/data/sequence/root.bench/2025/2810/1793112534389-7-0-0.tsfile",
+      "memtable_bytes": 496224,
+      "file_bytes": 228262,
+      "compression_ratio": 2.17
+    },
+    {
+      "ts": "2026-10-27 14:48:54,579",
+      "space": "seq",
+      "path": "/iotdb/data/datanode/data/sequence/root.bench/2024/2810/1793112534433-8-0-0.tsfile",
+      "memtable_bytes": 487488,
+      "file_bytes": 223619,
+      "compression_ratio": 2.18
+    },
+    {
+      "ts": "2026-10-27 14:48:54,678",
+      "space": "unseq",
+      "path": "/iotdb/data/datanode/data/unsequence/root.bench/2024/2810/1793112534301-7-0-0.tsfile",
+      "memtable_bytes": 490752,
+      "file_bytes": 242655,
+      "compression_ratio": 2.02
+    },
+    {
+      "ts": "2026-10-27 14:48:54,714",
+      "space": "seq",
+      "path": "/iotdb/data/datanode/data/sequence/root.bench/2025/2810/1793112534553-8-0-0.tsfile",
+      "memtable_bytes": 432672,
+      "file_bytes": 185719,
+      "compression_ratio": 2.33
+    },
+    {
+      "ts": "2026-10-27 14:48:54,728",
+      "space": "seq",
+      "path": "/iotdb/data/datanode/data/sequence/root.bench/2024/2810/1793112534613-9-0-0.tsfile",
+      "memtable_bytes": 170592,
+      "file_bytes": 73183,
+      "compression_ratio": 2.33
+    },
+    {
+      "ts": "2026-10-27 14:48:54,768",
+      "space": "unseq",
+      "path": "/iotdb/data/datanode/data/unsequence/root.bench/2024/2810/1793112534705-10-0-0.tsfile",
+      "memtable_bytes": 47232,
+      "file_bytes": 24603,
+      "compression_ratio": 1.92
+    },
+    {
+      "ts": "2026-10-27 14:48:54,806",
+      "space": "unseq",
+      "path": "/iotdb/data/datanode/data/unsequence/root.bench/2025/2810/1793112534377-6-0-0.tsfile",
+      "memtable_bytes": 427872,
+      "file_bytes": 211179,
+      "compression_ratio": 2.03
+    }
+  ],
+  "compaction_events": [
+    {
+      "ts": "2026-10-27 14:48:55,383",
+      "region": "root.bench-2025",
+      "task_type": "CrossSpaceCompaction",
+      "time_s": 0.38,
+      "speed_mbps": 4.05,
+      "chunk_overlap": 84,
+      "page_overlap": 84,
+      "chunk_none_overlap": 0,
+      "page_none_overlap": 0
+    },
+    {
+      "ts": "2026-10-27 14:48:55,403",
+      "region": "root.bench-2024",
+      "task_type": "CrossSpaceCompaction",
+      "time_s": 0.4,
+      "speed_mbps": 4.15,
+      "chunk_overlap": 96,
+      "page_overlap": 96,
+      "chunk_none_overlap": 0,
+      "page_none_overlap": 0
+    },
+    {
+      "ts": "2026-10-27 14:48:59,097",
+      "region": "root.bench-2025",
+      "task_type": "Sequence InnerSpaceCompaction",
+      "time_s": 0.09,
+      "speed_mbps": 17.73,
+      "chunk_overlap": 0,
+      "page_overlap": 0,
+      "chunk_none_overlap": 0,
+      "page_none_overlap": 0
+    },
+    {
+      "ts": "2026-10-27 14:48:59,102",
+      "region": "root.bench-2024",
+      "task_type": "Sequence InnerSpaceCompaction",
+      "time_s": 0.09,
+      "speed_mbps": 16.78,
+      "chunk_overlap": 0,
+      "page_overlap": 0,
+      "chunk_none_overlap": 0,
+      "page_none_overlap": 0
+    }
+  ],
+  "sample_warnings_errors": [
+    "2026-10-27 14:48:53,319 [reactor-http-epoll-4] WARN  o.a.i.m.m.d.LinuxDiskMetricsManager:447 - Cannot find process io status file /proc/1/io ",
+    "2026-10-27 14:48:53,319 [reactor-http-epoll-4] ERROR o.a.i.m.m.d.LinuxDiskMetricsManager:469 - Meets error while updating process io info ",
+    "2026-10-27 14:49:03,758 [reactor-http-epoll-4] WARN  o.a.i.m.m.d.LinuxDiskMetricsManager:447 - Cannot find process io status file /proc/1/io ",
+    "2026-10-27 14:49:03,759 [reactor-http-epoll-4] ERROR o.a.i.m.m.d.LinuxDiskMetricsManager:469 - Meets error while updating process io info "
+  ]
+}

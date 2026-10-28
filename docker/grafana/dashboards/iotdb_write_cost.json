@@ -1,0 +1,194 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": { "type": "grafana", "uid": "-- Grafana --" },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus_iotdb" },
+      "fieldConfig": {
+        "defaults": { "unit": "short" },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "id": 1,
+      "options": { "legend": { "displayMode": "list", "placement": "bottom" }, "tooltip": { "mode": "multi" } },
+      "targets": [
+        {
+          "expr": "sum by (name) (file_global_count{name=~\"seq|unseq\"})",
+          "legendFormat": "TsFile {{name}}",
+          "refId": "A"
+        },
+        {
+          "expr": "file_count{name=\"wal\"}",
+          "legendFormat": "WAL files",
+          "refId": "B"
+        }
+      ],
+      "title": "IoTDB Active TsFile & WAL Count (seq vs unseq)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus_iotdb" },
+      "fieldConfig": {
+        "defaults": { "unit": "bytes" },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "id": 2,
+      "options": { "legend": { "displayMode": "list", "placement": "bottom" }, "tooltip": { "mode": "multi" } },
+      "targets": [
+        {
+          "expr": "sum by (name) (file_global_size{name=~\"seq|unseq\"})",
+          "legendFormat": "TsFile {{name}} bytes",
+          "refId": "A"
+        },
+        {
+          "expr": "file_size{name=\"wal\"}",
+          "legendFormat": "WAL bytes",
+          "refId": "B"
+        }
+      ],
+      "title": "IoTDB Storage Footprint by Space (seq / unseq / wal)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus_iotdb" },
+      "fieldConfig": {
+        "defaults": { "unit": "ops" },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+      "id": 3,
+      "options": { "legend": { "displayMode": "list", "placement": "bottom" }, "tooltip": { "mode": "multi" } },
+      "targets": [
+        {
+          "expr": "rate(cost_task_seconds_count{name=~\"flush|inner_seq_compaction|inner_unseq_compaction|cross_compaction\"}[30s])",
+          "legendFormat": "{{name}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Flush & Compaction Task Execution Rate (tasks/s)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus_iotdb" },
+      "fieldConfig": {
+        "defaults": { "unit": "Bps" },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
+      "id": 4,
+      "options": { "legend": { "displayMode": "list", "placement": "bottom" }, "tooltip": { "mode": "multi" } },
+      "targets": [
+        {
+          "expr": "sum by (type) (rate(data_written_total[30s]))",
+          "legendFormat": "written {{type}}",
+          "refId": "A"
+        },
+        {
+          "expr": "sum by (type) (rate(data_read_total[30s]))",
+          "legendFormat": "read {{type}}",
+          "refId": "B"
+        }
+      ],
+      "title": "Compaction Read & Write Bandwidth (Bytes/s)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus_iotdb" },
+      "fieldConfig": {
+        "defaults": { "unit": "short" },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 16 },
+      "id": 5,
+      "options": { "legend": { "displayMode": "list", "placement": "bottom" }, "tooltip": { "mode": "multi" } },
+      "targets": [
+        {
+          "expr": "rate(process_cpu_time{job=\"iotdb-datanode\",name=\"process\"}[30s]) / 1e9",
+          "legendFormat": "DataNode JVM CPU cores",
+          "refId": "A"
+        },
+        {
+          "expr": "topk(2, rate(container_cpu_usage_seconds_total{id=~\"/docker/[0-9a-f]+\"}[30s]))",
+          "legendFormat": "cAdvisor {{id}}",
+          "refId": "B"
+        }
+      ],
+      "title": "DataNode & Container CPU Usage (Cores)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus_iotdb" },
+      "fieldConfig": {
+        "defaults": { "unit": "bytes" },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 16 },
+      "id": 6,
+      "options": { "legend": { "displayMode": "list", "placement": "bottom" }, "tooltip": { "mode": "multi" } },
+      "targets": [
+        {
+          "expr": "process_used_mem{job=\"iotdb-datanode\",name=\"process\"}",
+          "legendFormat": "DataNode Used Heap",
+          "refId": "A"
+        },
+        {
+          "expr": "topk(2, container_memory_working_set_bytes{id=~\"/docker/[0-9a-f]+\"})",
+          "legendFormat": "Container Working Set {{id}}",
+          "refId": "B"
+        }
+      ],
+      "title": "DataNode Heap & Container Working Set RAM",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus_iotdb" },
+      "fieldConfig": {
+        "defaults": { "unit": "Bps" },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 24 },
+      "id": 7,
+      "options": { "legend": { "displayMode": "list", "placement": "bottom" }, "tooltip": { "mode": "multi" } },
+      "targets": [
+        {
+          "expr": "topk(2, rate(container_fs_writes_bytes_total{device=\"/dev/sdd\",id=~\"/docker/[0-9a-f]+\"}[30s]))",
+          "legendFormat": "Block Write {{id}}",
+          "refId": "A"
+        },
+        {
+          "expr": "topk(2, rate(container_fs_reads_bytes_total{device=\"/dev/sdd\",id=~\"/docker/[0-9a-f]+\"}[30s]))",
+          "legendFormat": "Block Read {{id}}",
+          "refId": "B"
+        }
+      ],
+      "title": "Container Block Disk Read/Write Throughput (cAdvisor / cgroup v2)",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 39,
+  "tags": ["iotdb", "lsm-tree", "benchmark"],
+  "templating": { "list": [] },
+  "time": { "from": "now-15m", "to": "now" },
+  "timezone": "browser",
+  "title": "Apache IoTDB Write Amplification & LSM-Tree Cost",
+  "uid": "iotdb-write-cost-v1",
+  "version": 2
+}
